@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 const PeliculaDetail = () => {
   const { id } = useParams()
@@ -13,7 +13,7 @@ const PeliculaDetail = () => {
   return (
     <div>
       <h3>{peliculaDetails?.Title}</h3>
-      <img src={peliculaDetails?.Poster} alt={`Poster ${peliculaDetails?.Title}`} width={200}/>
+      <img src={peliculaDetails?.Poster} alt={`Poster ${peliculaDetails?.Title}`} width={200} />
       <p>Fecha de lanzamiento: {peliculaDetails?.Released}</p>
       <p>Género: {peliculaDetails?.Genre}</p>
       <p>Director: {peliculaDetails?.Director}</p>

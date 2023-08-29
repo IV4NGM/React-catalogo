@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 const Pelicula = ({ titulo, imagen, fecha, genero, director, resumen, calificacion, id, modificarLista, agregar }) => {
   return (
@@ -14,6 +15,19 @@ const Pelicula = ({ titulo, imagen, fecha, genero, director, resumen, calificaci
       <Link to={`/movie/${id}`}>Más información</Link>
     </div>
   )
+}
+
+Pelicula.propTypes = {
+  titulo: PropTypes.string.isRequired,
+  imagen: PropTypes.string.isRequired,
+  fecha: PropTypes.string.isRequired,
+  genero: PropTypes.string.isRequired,
+  director: PropTypes.string.isRequired,
+  resumen: PropTypes.string.isRequired,
+  calificacion: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
+  modificarLista: PropTypes.func.isRequired,
+  agregar: PropTypes.bool.isRequired
 }
 
 export default Pelicula

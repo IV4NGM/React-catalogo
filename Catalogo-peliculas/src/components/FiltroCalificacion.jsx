@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import PropTypes from 'prop-types'
 
 const FiltroCalificacion = ({ funcionModificadora, listaAModificar }) => {
   const [calificacion, setCalificacion] = useState(0)
@@ -14,6 +15,11 @@ const FiltroCalificacion = ({ funcionModificadora, listaAModificar }) => {
       <p>{calificacion}</p>
     </div>
   )
+}
+
+FiltroCalificacion.propTypes = {
+  funcionModificadora: PropTypes.func.isRequired,
+  listaAModificar: PropTypes.array.isRequired
 }
 
 export default FiltroCalificacion

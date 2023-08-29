@@ -4,7 +4,7 @@ import FiltroCalificacion from '../components/FiltroCalificacion'
 
 const Home = () => {
   const [peliculaBuscar, setPeliculaBuscar] = useState('')
-  const [peliculaBuscada, setPeliculaBuscada] = useState([])
+  // const [peliculaBuscada, setPeliculaBuscada] = useState([])
   const [peliculaBuscadaId, setPeliculaBuscadaId] = useState([])
   const [historialPeliculas, setHistorialPeliculas] = useState([])
   const [calificacionBusqueda, setCalificacionBusqueda] = useState(0)
@@ -48,7 +48,7 @@ const Home = () => {
       .then(result => result.json())
       .then(peliculas => {
         console.log(peliculas)
-        setPeliculaBuscada(peliculas.Search)
+        // setPeliculaBuscada(peliculas.Search)
         // setHistorialPeliculas(historialPeliculas.concat(peliculas.Search))
         return Promise.all(peliculas.Search.map((peliculaActual, index) => {
           return buscarPeliculaId(peliculaActual.imdbID, index)
