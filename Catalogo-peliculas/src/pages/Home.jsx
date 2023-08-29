@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
 import Pelicula from '../components/Pelicula'
+import FiltroCalificacion from '../components/FiltroCalificacion'
 
 const Home = () => {
   const [peliculaBuscar, setPeliculaBuscar] = useState('')
   const [peliculaBuscada, setPeliculaBuscada] = useState([])
   const [peliculaBuscadaId, setPeliculaBuscadaId] = useState([])
   const [historialPeliculas, setHistorialPeliculas] = useState([])
+  const [calificacionBusqueda, setCalificacionBusqueda] = useState(0)
+  const [calificacionLista, setCalificacionLista] = useState(0)
   // useEffect(() => {
   //   // fetch(`http://www.omdbapi.com/?s=${peliculaBuscar}&apikey=3bd70374`)
   //   fetch(`http://www.omdbapi.com/?s=superman&apikey=3bd70374`)
@@ -86,6 +89,28 @@ const Home = () => {
     // localStorage.setItem('peliculasLista', JSON.stringify(historial))
     localStorage.setItem('peliculasLista', JSON.stringify(historialPeliculas.filter((pelicula) => pelicula.imdbID !== id)))
   }
+  const eliminarBusqueda = () => {
+    setPeliculaBuscadaId([])
+    setPeliculaBuscar('')
+    localStorage.setItem('peliculasBuscadas', JSON.stringify([]))
+  }
+  const peliculaBuscadaArray = peliculaBuscadaId.filter((pelicula) => pelicula.imdbRating - calificacionBusqueda >= 0)
+  const historialPeliculasArray = historialPeliculas.filter((pelicula) => pelicula.imdbRating - calificacionLista >= 0)
+  // const filtrarPeliculas = (numLista, calificacion) => {
+  //   if (numLista === 0) {
+  //     peliculaBuscadaArray = peliculaBuscadaId.filter((pelicula) => pelicula.imdbRating >= calificacion)
+  //   } else {
+  //     historialPeliculasArray = historialPeliculas.filter((pelicula) => pelicula.imdbRating >= calificacion)
+  //   }
+  //   console.log('Filtrando')
+  // }
+  const filtrarPeliculas = (listaAModificar, calificacion) => {
+    if (listaAModificar === 0) {
+      setCalificacionBusqueda(calificacion)
+    } else {
+      setCalificacionLista(calificacion)
+    }
+  }
   return (
     <>
       <h1>Catálogo de películas</h1>
@@ -98,11 +123,14 @@ const Home = () => {
         onKeyDown={inputKeyDown}
       />
       <h2>Tu búsqueda actual</h2>
-      {peliculaBuscadaId.map((pelicula, index) => {
+      <button onClick={eliminarBusqueda}>Limpiar resultados de búsqueda</button>
+      <FiltroCalificacion funcionModificadora={filtrarPeliculas} listaAModificar={0} />
+      {peliculaBuscadaArray.map((pelicula, index) => {
         return <Pelicula key={index} titulo={pelicula.Title} imagen={pelicula.Poster} fecha={pelicula.Released} genero={pelicula.Genre} director={pelicula.Director} resumen={pelicula.Plot} calificacion={pelicula.imdbRating} id={pelicula.imdbID} modificarLista={agregarLista} agregar />
       })}
       <h2>Películas en Mi Lista</h2>
-      {historialPeliculas.map((pelicula, index) => {
+      <FiltroCalificacion funcionModificadora={filtrarPeliculas} listaAModificar={1} />
+      {historialPeliculasArray.map((pelicula, index) => {
         return <Pelicula key={index} titulo={pelicula.Title} imagen={pelicula.Poster} fecha={pelicula.Released} genero={pelicula.Genre} director={pelicula.Director} resumen={pelicula.Plot} calificacion={pelicula.imdbRating} id={pelicula.imdbID} modificarLista={eliminarLista} agregar={false} />
       })}
     </>
