@@ -6,11 +6,37 @@ const Home = () => {
   const [peliculaBuscada, setPeliculaBuscada] = useState([])
   const [peliculaBuscadaId, setPeliculaBuscadaId] = useState([])
   const [historialPeliculas, setHistorialPeliculas] = useState([])
+  // useEffect(() => {
+  //   // fetch(`http://www.omdbapi.com/?s=${peliculaBuscar}&apikey=3bd70374`)
+  //   fetch(`http://www.omdbapi.com/?s=superman&apikey=3bd70374`)
+  //     .then(result => result.json())
+  //     .then(peliculas => {
+  //       console.log(peliculas)
+  //       setPeliculaBuscada(peliculas.Search)
+  //       // setHistorialPeliculas(historialPeliculas.concat(peliculas.Search))
+  //       return Promise.all(peliculas.Search.map((peliculaActual, index) => {
+  //         return buscarPeliculaId(peliculaActual.imdbID, index)
+  //       }))
+  //     })
+  //     .then((peliculaBuscadaId) => {
+  //       setPeliculaBuscadaId(peliculaBuscadaId)
+  //       // setHistorialPeliculas(historialPeliculas.concat(peliculaBuscadaId))
+  //       console.log('peliculaBuscadaId', peliculaBuscadaId)
+  //     })
+  //     .catch(error => console.log('Ocurrió un error', error))
+  // }, [peliculaBuscar])
   useEffect(() => {
-
+    if (localStorage.getItem('peliculasBuscadas')) {
+      setPeliculaBuscadaId(JSON.parse(localStorage.getItem('peliculasBuscadas')))
+    }
+    if (localStorage.getItem('peliculasLista')) {
+      setHistorialPeliculas(JSON.parse(localStorage.getItem('peliculasLista')))
+    }
   }, [])
+
   const inputKeyDown = (event) => {
     if (event.key === 'Enter') {
+      setPeliculaBuscar(peliculaBuscar)
       buscarPeliculaTitulo(peliculaBuscar)
     }
   }
@@ -29,6 +55,7 @@ const Home = () => {
         setPeliculaBuscadaId(peliculaBuscadaId)
         // setHistorialPeliculas(historialPeliculas.concat(peliculaBuscadaId))
         console.log('peliculaBuscadaId', peliculaBuscadaId)
+        localStorage.setItem('peliculasBuscadas', JSON.stringify(peliculaBuscadaId))
       })
       .catch(error => console.log('Ocurrió un error', error))
   }
@@ -48,10 +75,16 @@ const Home = () => {
     }
     if (agregar) {
       setHistorialPeliculas(historialPeliculas.concat(peliculaBuscadaId.filter((pelicula) => pelicula.imdbID === id)))
+      // const historial = [...historialPeliculas]
+      // localStorage.setItem('peliculasLista', JSON.stringify(historial))
+      localStorage.setItem('peliculasLista', JSON.stringify(historialPeliculas.concat(peliculaBuscadaId.filter((pelicula) => pelicula.imdbID === id))))
     }
   }
   const eliminarLista = (id) => {
     setHistorialPeliculas(historialPeliculas.filter((pelicula) => pelicula.imdbID !== id))
+    // const historial = [...historialPeliculas]
+    // localStorage.setItem('peliculasLista', JSON.stringify(historial))
+    localStorage.setItem('peliculasLista', JSON.stringify(historialPeliculas.filter((pelicula) => pelicula.imdbID !== id)))
   }
   return (
     <>
