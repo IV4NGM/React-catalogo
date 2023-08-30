@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 
 const PeliculaDetail = () => {
   const { id } = useParams()
@@ -12,13 +12,19 @@ const PeliculaDetail = () => {
   }, [id])
   return (
     <div>
-      <h3>{peliculaDetails?.Title}</h3>
-      <img src={peliculaDetails?.Poster} alt={`Poster ${peliculaDetails?.Title}`} width={200} />
-      <p>Fecha de lanzamiento: {peliculaDetails?.Released}</p>
-      <p>Género: {peliculaDetails?.Genre}</p>
-      <p>Director: {peliculaDetails?.Director}</p>
-      <p>Resumen: {peliculaDetails?.Plot}</p>
-      <p>Calificación: {peliculaDetails?.imdbRating}</p>
+      <h2 className='head-title head-color'>{peliculaDetails?.Title}</h2>
+      <img src={peliculaDetails?.Poster} alt={`Poster ${peliculaDetails?.Title}`} width={300} />
+      <div className='movie-details'>
+        <p><strong>Fecha de lanzamiento:</strong> {peliculaDetails?.Released}</p>
+        <p><strong>Géneros:</strong> {peliculaDetails?.Genre}</p>
+        <p><strong>Director:</strong> {peliculaDetails?.Director}</p>
+        <p><strong>Resumen:</strong> {peliculaDetails?.Plot}</p>
+        <div className='movie-row-container'>
+          <p><strong>Calificación:</strong> {peliculaDetails?.imdbRating}</p>
+          <img className='star-image' />
+        </div>
+      </div>
+      <Link to='/'>Volver a la búsqueda</Link>
     </div>
   )
 }
