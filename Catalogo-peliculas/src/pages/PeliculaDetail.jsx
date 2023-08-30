@@ -11,10 +11,10 @@ const PeliculaDetail = () => {
       .catch(error => console.log('Ocurrió un error', error))
   }, [id])
   return (
-    <div>
+    <div className='buscador-container'>
       <h2 className='head-title head-color'>{peliculaDetails?.Title}</h2>
       <img src={peliculaDetails?.Poster} alt={`Poster ${peliculaDetails?.Title}`} width={300} />
-      <div className='movie-details'>
+      <div className='movie-details card'>
         <p><strong>Fecha de lanzamiento:</strong> {peliculaDetails?.Released}</p>
         <p><strong>Géneros:</strong> {peliculaDetails?.Genre}</p>
         <p><strong>Director:</strong> {peliculaDetails?.Director}</p>

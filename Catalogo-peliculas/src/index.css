@@ -513,6 +513,8 @@ h1{
   margin: 20px 40px 20px 40px;
   align-items: flex-start;
   justify-content: flex-start;
+  width: 70%;
+  align-self: center;
 }
 
 .movie-details p{
